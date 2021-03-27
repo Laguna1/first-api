@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  title: MyString
+  pages: 1
+  read: 1
+  author: MyString
+
+two:
+  user: two
+  title: MyString
+  pages: 1
+  read: 1
+  author: MyString
