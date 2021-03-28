@@ -1,6 +1,6 @@
 class Book < ApplicationRecord
-  belongs_to :tracker
-  belongs_to :user, through: :tracker
+  has_one :tracker, dependent: :destroy
+  has_one :user, through: :tracker
 
   validates :title, presence: true, length: { minimum: 3 }
   validates :author, presence: true
