@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
-  has_many :books, dependent: :destroy
+
+  has_many :trackers
+  has_many :books, through: :trackers, dependent: :destroy
 
   validates :name, presence: true
 end

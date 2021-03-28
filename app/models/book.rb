@@ -1,5 +1,7 @@
 class Book < ApplicationRecord
-  belongs_to :user
+  belongs_to :tracker
+  belongs_to :user, through: :tracker
+  
   validates :title, presence: true
   validates :author, presence: true
   validates :pages, presence: true

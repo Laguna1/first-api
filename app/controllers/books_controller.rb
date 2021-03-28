@@ -4,7 +4,7 @@ module Api
       before_action :authorized
 
       def index
-        @books = Book.where(user_id: @user.id).order('created_at DESC')
+        @books = Book.all
         render json: { status: 'SUCCESS', message: 'Loaded Books', data: @books }, status: :ok
       end
 
@@ -15,8 +15,7 @@ module Api
 
       def create
         @book = Book.new(book_params)
-        @book.user_id = @user.id
-
+        
         if @book.save
           render json: { status: 'SUCCESS', message: 'Saved Books', data: @book }, status: :ok
         else
