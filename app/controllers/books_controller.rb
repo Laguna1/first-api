@@ -4,23 +4,23 @@ module Api
       before_action :authorized
 
       def index
-        @books = Book.all
-        render json: { status: 'SUCCESS', message: 'Loaded Books', data: @books }, status: :ok
+        @books = Book.all.order("created_at DESC").where(user_id: @user.id)
+        render json: { books: @books }, status: :ok
       end
 
       def show
         @book = Book.find(params[:id])
-        render json: { status: 'SUCCESS', message: 'Loaded Books', data: @book }, status: :ok
+        render json: { book: @book }, status: :ok
       end
 
       def create
         @book = Book.new(book_params)
+        @course.user_id = @user.id
         
         if @book.save
-          render json: { status: 'SUCCESS', message: 'Saved Books', data: @book }, status: :ok
+          render json: { book: @book }, status: :ok
         else
-          render json: { status: 'ERROR', message: 'Book was not saved',
-                         data: @book.errors }, status: :unprocessable_entity
+          render json: { error: @book.errors }, status: :unprocessable_entity
         end
       end
 
@@ -28,17 +28,16 @@ module Api
         @book = Book.find(params[:id])
 
         if @book.update_attributes(book_params)
-          render json: { status: 'SUCCESS', message: 'Updated Book', data: @book }, status: :ok
+          render json: { book: @book }, status: :ok
         else
-          render json: { status: 'ERROR', message: 'Book was not updated',
-                         data: @book.errors }, status: :unprocessable_entity
+          render json: { error: @book.errors }, status: :unprocessable_entity
         end
       end
 
       def destroy
         @book = Book.find(params[:id])
         @book.destroy
-        render json: { status: 'SUCCESS', message: 'Book deleted', data: @book }, status: :ok
+        render json: { book: @book }, status: :ok
       end
 
       private
